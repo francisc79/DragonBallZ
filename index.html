@@ -5,46 +5,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DBZ - Jogo da Memória</title>
-    <link rel="stylesheet" href="style.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBZ - Jogo da Memória</title>
-
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="ESFERA.png">
-
     <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="DBZ.png" type="image/x-icon">
+    <link rel="icon" href="img/DBZ.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="DBZ.png">
+
+    <meta property="og:title" content="Dragon Ball Z - Batalha da Memória">
+    <meta property="og:description"
+        content="Desafie seus amigos! Jogue com Goku, Vegeta e os guerreiros Z neste jogo da memória.">
+    <meta property="og:image" content="https://francisc79.github.io/DragonBallZ/ESFERA.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="index.html">
 
     <meta name="theme-color" content="#ff9900">
+    <!--Os iPhones ignoram parte do manifest.json, por isso precisamos de colocar etiquetas específicas no HTML.-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 </head>
 
 <body>
-    <audio id="bgMusic" loop>
-        <source src="cha-la-head-cha-la-bridge-1.mp3" type="audio/mpeg">
-    </audio>
-<audio id="flipSound">
-    <source src="dragon-ball-z-grabbing-sound.mp3" type="audio/mpeg">
-</audio>
+
+    <div id="startScreen" class="start-overlay">
+        <div class="menu-box">
+            <h1>Dragon Ball Memory</h1>
+            <div class="mode-select">
+                <button onclick="selectMode(1)">1 Jogador</button>
+                <button onclick="selectMode(2)">2 Jogadores</button>
+            </div>
+
+            <div id="inputsSection" style="display: none;">
+                <input type="text" id="player1Name" placeholder="Nome Jogador 1" value="Goku">
+                <input type="text" id="player2Name" placeholder="Nome Jogador 2" value="Vegeta">
+                <button class="start-btn" onclick="initGame()">COMECAR LUTAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gameOverScreen" class="start-overlay" style="display: none;">
+        <div class="menu-box">
+            <h1 id="winnerText">FIM DE JOGO!</h1>
+
+            <div id="finalScore" style="color: white; font-size: 1.2rem; margin-bottom: 20px;"></div>
+
+            <button class="start-btn" onclick="playAgain()">JOGAR NOVAMENTE</button>
+            <button onclick="restartSetup()">TROCAR JOGADORES</button>
+        </div>
+    </div>
+
     <header>
-        <h1>Dragon Ball Z - Memory</h1>
-        <div class="stats">Tentativas: <span id="moves">0</span></div>
+        <div id="scoreBoard" class="score-board" style="display: none;">
+
+            <div id="p1Card" class="player-card active">
+                <img id="p1Avatar" src="" alt="P1" class="avatar">
+                <div class="info">
+                    <span id="p1NameDisplay">Jogador 1</span>
+                    <span class="score" id="p1Score">0</span>
+                </div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div id="p2Card" class="player-card">
+                <div class="info">
+                    <span id="p2NameDisplay">Jogador 2</span>
+                    <span class="score" id="p2Score">0</span>
+                </div>
+                <img id="p2Avatar" src="" alt="P2" class="avatar">
+            </div>
+
+        </div>
+
+        <div id="soloStats" class="stats" style="display:none;">Tentativas: <span id="moves">0</span></div>
     </header>
 
-    <div class="game-board" id="gameBoard">
-    </div>
-    <button onclick="restartGame()">Reiniciar Jogo</button>
+    <div class="game-board" id="gameBoard"></div>
 
+    <button onclick="restartSetup()" style="margin-top: 20px;">Menu Principal</button>
+
+   <audio id="musicSolo" loop>
+        <source src="cha-la-head-cha-la-bridge-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="musicVs" loop>
+        <source src="Battle.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flipSound">
+        <source src="dragon-ball-z-grabbing-sound.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="winSound">
+        <source src="Final.mp3" type="audio/mpeg">
+    </audio>
     <script src="script.js"></script>
 
     <script>
+        // Registro do Service Worker (Para funcionar como App)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((registration) => {
-                        console.log('ServiceWorker registrado com sucesso: ', registration.scope);
-                    }, (err) => {
-                        console.log('Falha ao registrar o ServiceWorker: ', err);
-                    });
+                navigator.serviceWorker.register('./sw.js');
             });
         }
     </script>
