@@ -1,0 +1,152 @@
+/* --- ESTILOS GERAIS --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #222;
+    background-image: linear-gradient(135deg, #1a1a1a 25%, #2a2a2a 100%);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+    /* Impede que o usuário selecione texto ao clicar rápido no celular */
+    user-select: none; 
+    padding-bottom: 20px;
+}
+
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+h1 {
+    color: #ff9900;
+    text-shadow: 2px 2px #000;
+    font-size: 2rem; /* Fonte um pouco menor para caber em telas pequenas */
+    margin-bottom: 10px;
+}
+
+.stats {
+    font-size: 1.2rem;
+    color: #5bc0de;
+}
+
+/* --- TABULEIRO DO JOGO --- */
+.game-board {
+    display: grid;
+    /* Aqui está o segredo: cria colunas automáticas com mínimo de 70px ou 100px */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    width: 95%; /* Ocupa quase toda a largura da tela no celular */
+    max-width: 800px;
+    margin-bottom: 30px;
+    perspective: 1000px;
+}
+
+/* --- CARTAS --- */
+.card {
+    background-color: transparent;
+    /* Removemos a altura fixa (height: 120px) e usamos proporção */
+    width: 100%;
+    aspect-ratio: 3 / 4; /* Mantém sempre o formato retangular perfeito */
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    /* Tira o destaque azul de toque no mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.front-face, .back-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    border: 2px solid #fff;
+}
+
+/* O verso da carta (Capa) */
+.back-face {
+    /* Se você salvou a capa como 'capa.jpg' na pasta img */
+    background-image: url('img/Esferas.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Ajusta a imagem para cobrir toda a carta sem esticar */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Esconde a letra "Z" caso ela ainda esteja no HTML */
+    color: transparent; 
+}
+
+
+/* A frente da carta (Personagem) */
+.front-face {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.front-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Estado quando encontra o par */
+.card.matched .front-face {
+    opacity: 0.6;
+    border-color: #00ff00;
+}
+
+/* --- BOTÃO --- */
+button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: #ff9900;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 40px;
+    box-shadow: 0 4px #b36b00;
+    transition: all 0.1s;
+}
+
+button:active {
+    box-shadow: 0 2px #b36b00;
+    transform: translateY(2px);
+}
+
+/* --- AJUSTES ESPECÍFICOS PARA CELULAR (Media Queries) --- */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem; /* Título menor */
+    }
+
+    .game-board {
+        /* No celular, garante que caibam 3 ou 4 cartas por linha */
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 5px; /* Espaço menor entre cartas */
+    }
+
+    .card {
+        /* Garante que a borda não fique grossa demais em telas pequenas */
+        border-width: 1px;
+    }
+}

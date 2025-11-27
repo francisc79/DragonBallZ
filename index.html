@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBZ - Jogo da Memória</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBZ - Jogo da Memória</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="ESFERA.png">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#ff9900">
+</head>
+
+<body>
+    <audio id="bgMusic" loop>
+        <source src="cha-la-head-cha-la-bridge-1.mp3" type="audio/mpeg">
+    </audio>
+<audio id="flipSound">
+    <source src="dragon-ball-z-grabbing-sound.mp3" type="audio/mpeg">
+</audio>
+    <header>
+        <h1>Dragon Ball Z - Memory</h1>
+        <div class="stats">Tentativas: <span id="moves">0</span></div>
+    </header>
+
+    <div class="game-board" id="gameBoard">
+    </div>
+    <button onclick="restartGame()">Reiniciar Jogo</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registrado com sucesso: ', registration.scope);
+                    }, (err) => {
+                        console.log('Falha ao registrar o ServiceWorker: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>
