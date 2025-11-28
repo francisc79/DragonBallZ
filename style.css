@@ -256,20 +256,49 @@ button:active {
 .main-menu-btn:hover {
     background-color: #555;
 }
-/* --- AJUSTES ESPECÍFICOS PARA CELULAR (Media Queries) --- */
+
+
+/* --- ESCONDER BARRA DE ROLAGEM (Visualmente) --- */
+
+/* Para Chrome, Safari e Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Para Firefox, IE e Edge */
+body {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* --- AJUSTES PARA CELULAR --- */
 @media (max-width: 600px) {
     h1 {
-        font-size: 1.5rem; /* Título menor */
+        font-size: 1.5rem;
+        margin-bottom: 5px; /* Menos espaço no título */
     }
 
     .game-board {
-        /* No celular, garante que caibam 3 ou 4 cartas por linha */
+        /* 4 cartas por linha */
         grid-template-columns: repeat(4, 1fr); 
-        gap: 5px; /* Espaço menor entre cartas */
+        gap: 5px; /* Espaço bem pequeno entre cartas */
+        width: 98%; /* Usa quase a tela toda */
+        margin-bottom: 10px;
     }
 
     .card {
-        /* Garante que a borda não fique grossa demais em telas pequenas */
         border-width: 1px;
+    }
+    
+    /* Reduz um pouco o cabeçalho para sobrar espaço */
+    header {
+        margin: 10px 0;
+    }
+    
+    /* Ajusta o botão do menu para não ficar gigante */
+    .main-menu-btn {
+        padding: 10px 20px;
+        margin-top: 10px;
+        margin-bottom: 30px;
     }
 }
