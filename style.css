@@ -20,15 +20,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Mudamos para o topo, evita cortar conteúdo */
+    justify-content: flex-start; /* Mantém o conteúdo no topo */
     min-height: 100vh;
     color: white;
     user-select: none;
     
-    /* AQUI ESTÁ A CORREÇÃO DO BOTÃO: */
+    /* --- CORREÇÃO DO ESPAÇAMENTO --- */
     padding-top: 20px;
-    padding-bottom: 50px; /* Dá espaço extra no final para o botão */
-    overflow-x: hidden; /* Evita rolagem lateral */
+    padding-bottom: 120px; /* Aumentei bastante para o botão ter folga */
+    overflow-y: auto;      /* Permite rolar a tela se ficar muito grande */
+    overflow-x: hidden;
 }
 
 header {
@@ -236,15 +237,25 @@ button:active {
     transform: translateY(2px);
 }
 
+
 /* Botão de Voltar ao Menu */
 .main-menu-btn {
-    margin-top: 4px;
+    margin-top: 30px;
+    margin-bottom: 50px; /* Espaço extra abaixo do botão */
     background-color: #444;
+    color: #fff;
     border: 1px solid #666;
-    padding: 10px 20px;
+    padding: 15px 30px;  /* Botão um pouco maior para facilitar o toque */
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
     z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
+.main-menu-btn:hover {
+    background-color: #555;
+}
 /* --- AJUSTES ESPECÍFICOS PARA CELULAR (Media Queries) --- */
 @media (max-width: 600px) {
     h1 {
