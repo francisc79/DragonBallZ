@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dbz-memory-v2';
+const CACHE_NAME = 'dbz-memory-v3';
 
 // Arquivos essenciais para o jogo iniciar
 // (Não precisamos listar todas as imagens aqui, vamos cachear elas dinamicamente)

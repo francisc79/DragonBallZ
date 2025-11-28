@@ -20,11 +20,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start; /* Mudamos para o topo, evita cortar conteúdo */
     min-height: 100vh;
     color: white;
-    /* Impede que o usuário selecione texto ao clicar rápido no celular */
-    user-select: none; 
-    padding-bottom: 20px;
+    user-select: none;
+    
+    /* AQUI ESTÁ A CORREÇÃO DO BOTÃO: */
+    padding-top: 20px;
+    padding-bottom: 50px; /* Dá espaço extra no final para o botão */
+    overflow-x: hidden; /* Evita rolagem lateral */
 }
 
 header {
@@ -232,6 +236,14 @@ button:active {
     transform: translateY(2px);
 }
 
+/* Botão de Voltar ao Menu */
+.main-menu-btn {
+    margin-top: 20px;
+    background-color: #444;
+    border: 1px solid #666;
+    padding: 10px 20px;
+    z-index: 10; /* Garante que fique por cima */
+}
 
 /* --- AJUSTES ESPECÍFICOS PARA CELULAR (Media Queries) --- */
 @media (max-width: 600px) {

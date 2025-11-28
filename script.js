@@ -7,6 +7,7 @@ musicSolo.volume = 0.4; // Volume do modo Solo
 
 const musicVs = document.getElementById('musicVs'); 
 musicVs.volume = 0.5;   // Volume do modo Versus
+
 const flipSound = document.getElementById('flipSound'); 
 flipSound.volume = 0.8; // Efeito sonoro alto
 
@@ -92,11 +93,15 @@ function initGame() {
 
     // ♫ TOCA A MÚSICA DE FUNDO AO INICIAR ♫
     stopAllAudio(); // Garante que nada mais está tocando
-   if (isMultiplayer) {
+    
+    if (isMultiplayer) {
         musicVs.play().catch(e => console.log(e));
     } else {
         musicSolo.play().catch(e => console.log(e));
     }
+
+    // ATIVA A TELA CHEIA
+    enterFullScreen();
 }
 
 // --- LÓGICA DO JOGO ---
@@ -134,8 +139,6 @@ function flipCard() {
     flipSound.play();
     
     this.classList.add('flip');
-    // ... restante da função ...
-
 
     if (!hasFlippedCard) {
         hasFlippedCard = true;
@@ -247,18 +250,16 @@ function checkWinCondition() {
 
 // Função auxiliar para parar tudo
 function stopAllAudio() {
-    // Para a música Solo
     musicSolo.pause();
     musicSolo.currentTime = 0;
     
-    // Para a música Versus
     musicVs.pause();
     musicVs.currentTime = 0;
     
-    // Para a música de Vitória
     winSound.pause();
     winSound.currentTime = 0;
 }
+
 function restartSetup() {
     stopAllAudio();
     
@@ -276,10 +277,23 @@ function playAgain() {
     
     startGame();
     
-    // Toca a música certa baseada no modo atual
     if (isMultiplayer) {
         musicVs.play().catch(e => console.log(e));
     } else {
         musicSolo.play().catch(e => console.log(e));
+    }
+}
+
+// Função para Tela Cheia (Agora fora do initGame)
+function enterFullScreen() {
+    const doc = document.documentElement;
+    if (doc.requestFullscreen) {
+        doc.requestFullscreen();
+    } else if (doc.mozRequestFullScreen) { /* Firefox */
+        doc.mozRequestFullScreen();
+    } else if (doc.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        doc.webkitRequestFullscreen();
+    } else if (doc.msRequestFullscreen) { /* IE/Edge */
+        doc.msRequestFullscreen();
     }
 }
