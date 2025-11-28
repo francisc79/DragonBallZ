@@ -238,11 +238,11 @@ button:active {
 
 /* Botão de Voltar ao Menu */
 .main-menu-btn {
-    margin-top: 20px;
+    margin-top: 2px;
     background-color: #444;
     border: 1px solid #666;
     padding: 10px 20px;
-    z-index: 10; /* Garante que fique por cima */
+    z-index: 10;
 }
 
 /* --- AJUSTES ESPECÍFICOS PARA CELULAR (Media Queries) --- */
