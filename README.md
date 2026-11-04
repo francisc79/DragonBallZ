@@ -6,11 +6,11 @@ Jogo da memória temático inspirado no universo Dragon Ball Z. O projeto utiliz
   <a href="https://francisc79.github.io/DragonBallZ/"><strong>▶ JOGAR ONLINE</strong></a>
 </p>
 
-## Prévia do jogo
+## Captura de tela do jogo
 
 <p align="center">
-  <a href="docs/gameplay-preview.svg">
-    <img src="docs/gameplay-preview.svg" alt="Prévia visual da interface Dragon Ball Z Memory Battle, com placar e tabuleiro de cartas" width="900">
+  <a href="docs/Imagem do ChatGPT 4 de nov. de 2026, 10_20_43.png">
+    <img src="docs/Imagem do ChatGPT 4 de nov. de 2026, 10_20_43.png" alt="Prévia visual da interface Dragon Ball Z Memory Battle, com placar e tabuleiro de cartas" width="900">
   </a>
 </p>
 
@@ -46,7 +46,7 @@ Jogo da memória temático inspirado no universo Dragon Ball Z. O projeto utiliz
 ```text
 DragonBallZ/
 ├── docs/
-│   └── gameplay-preview.svg  # Prévia visual do jogo
+│   └── gameplay-preview.svg  # Captura de tela real do jogo
 ├── img/                      # Imagens dos personagens
 ├── index.html                # Estrutura da aplicação
 ├── style.css                 # Estilos e responsividade
