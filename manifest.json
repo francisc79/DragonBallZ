@@ -1,21 +1,15 @@
 {
-  "name": "Dragon Ball Z - Memory Game",
+  "name": "Dragon Ball Z — Memory Battle",
   "short_name": "DBZ Memory",
+  "description": "Jogo da memória inspirado no universo Dragon Ball Z.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#222222",
-  "theme_color": "#ff9900",
+  "background_color": "#080c16",
+  "theme_color": "#090d18",
   "orientation": "portrait",
   "icons": [
-    {
-      "src": "ESFERA.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "ESFERA.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "ESFERA.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "ESFERA.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }
