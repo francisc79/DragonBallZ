@@ -2,7 +2,17 @@
 
 Jogo da memória temático inspirado no universo Dragon Ball Z. O projeto utiliza **HTML5, CSS3 e JavaScript puro**, sem frameworks ou dependências de instalação.
 
-<p align="center"><a href="https://francisc79.github.io/DragonBallZ/"><strong>▶ JOGAR ONLINE</strong></a></p>
+<p align="center">
+  <a href="https://francisc79.github.io/DragonBallZ/"><strong>▶ JOGAR ONLINE</strong></a>
+</p>
+
+## Prévia do jogo
+
+<p align="center">
+  <a href="docs/gameplay-preview.svg">
+    <img src="docs/gameplay-preview.svg" alt="Prévia visual da interface Dragon Ball Z Memory Battle, com placar e tabuleiro de cartas" width="900">
+  </a>
+</p>
 
 ## Funcionalidades
 
@@ -35,15 +45,17 @@ Jogo da memória temático inspirado no universo Dragon Ball Z. O projeto utiliz
 
 ```text
 DragonBallZ/
-├── img/              # Imagens dos personagens
-├── index.html        # Estrutura da aplicação
-├── style.css         # Estilos e responsividade
-├── script.js         # Regras e interações do jogo
-├── manifest.json     # Configuração PWA
-├── sw.js             # Cache offline
-├── DBZ.png           # Identidade visual
-├── ESFERA.png        # Elemento visual e ícone
-└── *.mp3             # Trilhas e efeitos sonoros
+├── docs/
+│   └── gameplay-preview.svg  # Prévia visual do jogo
+├── img/                      # Imagens dos personagens
+├── index.html                # Estrutura da aplicação
+├── style.css                 # Estilos e responsividade
+├── script.js                 # Regras e interações do jogo
+├── manifest.json             # Configuração PWA
+├── sw.js                     # Cache offline
+├── DBZ.png                   # Identidade visual
+├── ESFERA.png                # Elemento visual e ícone
+└── *.mp3                     # Trilhas e efeitos sonoros
 ```
 
 ## Destaques de implementação
