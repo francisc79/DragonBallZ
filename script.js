@@ -25,7 +25,7 @@ const allCharacters = [
 ];
 
 // --- AVATARES ---
-const maleAvatars = ['Goku SSJ', 'Vegeta Scouter', 'Piccolo', 'Gohan SS2', 'Trunks Espada', 'Mestre Kame'];
+const maleAvatars = ['Goku SSJ', 'Super Vegeta', 'Piccolo', 'Gohan SS2', 'Trunks Espada', 'Mestre Kame'];
 const femaleAvatars = ['Bulma', 'ChiChi', 'Android 18', 'Videl'];
 
 // VARIÁVEIS DO JOGO
@@ -124,7 +124,7 @@ function startGame() {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.character = char;
-        card.innerHTML = `<div class="front-face"><img src="img/${char}.jpg"></div><div class="back-face"></div>`;
+        card.innerHTML = `<div class="front-face"><img src="img/${char}.jpg" alt="${char}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='DBZ.png';"></div><div class="back-face"></div>`;
         card.addEventListener('click', flipCard);
         gameBoard.appendChild(card);
     });
