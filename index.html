@@ -1,103 +1,118 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090d18">
-  <meta name="description" content="Um jogo da memória inspirado no universo Dragon Ball Z. Treine sua memória sozinho ou desafie um amigo!">
-  <meta property="og:title" content="Dragon Ball Z — Memory Battle">
-  <meta property="og:description" content="Encontre os pares, marque pontos e prove que você é um verdadeiro guerreiro Z.">
-  <meta property="og:image" content="https://francisc79.github.io/DragonBallZ/ESFERA.png">
-  <meta property="og:type" content="website">
-  <title>Dragon Ball Z — Memory Battle</title>
-  <link rel="icon" type="image/png" href="ESFERA.png">
-  <link rel="apple-touch-icon" href="DBZ.png">
-  <link rel="manifest" href="manifest.json">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBZ - Jogo da Memória</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="ESFERA.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="DBZ.png" type="image/x-icon">
+    <link rel="icon" href="img/DBZ.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="DBZ.png">
+
+    <meta property="og:title" content="Dragon Ball Z - Batalha da Memória">
+    <meta property="og:description"
+        content="Desafie seus amigos! Jogue com Goku, Vegeta e os guerreiros Z neste jogo da memória.">
+    <meta property="og:image" content="https://francisc79.github.io/DragonBallZ/ESFERA.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="index.html">
+
+    <meta name="theme-color" content="#ff9900">
+    <!--Os iPhones ignoram parte do manifest.json, por isso precisamos de colocar etiquetas específicas no HTML.-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 </head>
+
 <body>
-  <div class="ambient ambient-one" aria-hidden="true"></div>
-  <div class="ambient ambient-two" aria-hidden="true"></div>
-  <main class="app-shell">
-    <header class="topbar">
-      <a class="brand" href="./" aria-label="Dragon Ball Z Memory Battle - início">
-        <img src="DBZ.png" alt="Dragon Ball Z">
-        <span><strong>MEMORY</strong><small>BATTLE</small></span>
-      </a>
-      <div class="topbar-tag"><span class="status-dot"></span> DESAFIO DOS GUERREIROS Z</div>
-    </header>
-    <section class="intro" aria-label="Apresentação do jogo">
-      <div class="intro-copy">
-        <p class="eyebrow">SEU PODER ESTÁ NA MEMÓRIA</p>
-        <h1>ENCONTRE OS<br><span>GUERREIROS Z.</span></h1>
-        <p class="intro-description">Vire as cartas, encontre os pares e mostre que sua memória é digna de um Super Saiyajin.</p>
-      </div>
-      <div class="intro-art" aria-hidden="true"><div class="art-glow"></div><img src="DBZ.png" alt=""></div>
-    </section>
-    <section class="game-panel" aria-label="Área do jogo">
-      <div id="startScreen" class="overlay-screen">
+
+    <div id="startScreen" class="start-overlay">
         <div class="menu-box">
-          <div class="menu-emblem"><img src="ESFERA.png" alt="Esfera do Dragão"></div>
-          <p class="eyebrow">ESCOLHA SUA BATALHA</p>
-          <h2>PREPARADO, GUERREIRO?</h2>
-          <p class="menu-description">Selecione o modo de jogo para começar o treinamento.</p>
-          <div class="mode-select">
-            <button class="mode-button selected" type="button" data-mode="1" onclick="selectMode(1)"><span class="mode-icon">⚡</span><span><strong>SOLO</strong><small>Treine sua memória</small></span><span class="mode-arrow">›</span></button>
-            <button class="mode-button" type="button" data-mode="2" onclick="selectMode(2)"><span class="mode-icon">⚔</span><span><strong>VERSUS</strong><small>Desafie um amigo</small></span><span class="mode-arrow">›</span></button>
-          </div>
-          <div id="inputsSection" class="inputs-section">
-            <label for="player1Name">NOME DO JOGADOR 1</label>
-            <input type="text" id="player1Name" placeholder="Ex.: Goku" value="Goku" maxlength="16" autocomplete="off">
-            <div id="player2Field" class="player2-field" hidden>
-              <label for="player2Name">NOME DO JOGADOR 2</label>
-              <input type="text" id="player2Name" placeholder="Ex.: Vegeta" value="Vegeta" maxlength="16" autocomplete="off">
+            <h1>Dragon Ball Memory</h1>
+            <div class="mode-select">
+                <button onclick="selectMode(1)">1 Jogador</button>
+                <button onclick="selectMode(2)">2 Jogadores</button>
             </div>
-            <button class="start-btn" type="button" onclick="initGame()">INICIAR BATALHA <span>→</span></button>
-          </div>
-          <p class="menu-footnote">10 pares · 20 cartas · diversão garantida</p>
+
+            <div id="inputsSection" style="display: none;">
+                <input type="text" id="player1Name" placeholder="Nome Jogador 1" value="Goku">
+                <input type="text" id="player2Name" placeholder="Nome Jogador 2" value="Vegeta">
+                <button class="start-btn" onclick="initGame()">COMECAR LUTAR</button>
+            </div>
         </div>
-      </div>
-      <div id="gameOverScreen" class="overlay-screen" style="display:none" role="dialog" aria-modal="true" aria-labelledby="winnerText">
-        <div class="menu-box result-box">
-          <div class="result-orb">★</div>
-          <p class="eyebrow">FIM DE BATALHA</p>
-          <h2 id="winnerText">MISSÃO CUMPRIDA!</h2>
-          <div id="finalScore" class="final-score"></div>
-          <button class="start-btn" type="button" onclick="playAgain()">JOGAR NOVAMENTE <span>↻</span></button>
-          <button class="secondary-btn" type="button" onclick="restartSetup()">VOLTAR AO MENU</button>
+    </div>
+
+    <div id="gameOverScreen" class="start-overlay" style="display: none;">
+        <div class="menu-box">
+            <h1 id="winnerText">FIM DE JOGO!</h1>
+
+            <div id="finalScore" style="color: white; font-size: 1.2rem; margin-bottom: 20px;"></div>
+
+            <button class="start-btn" onclick="playAgain()">JOGAR NOVAMENTE</button>
+            <button onclick="restartSetup()">TROCAR JOGADORES</button>
         </div>
-      </div>
-      <div class="game-content">
-        <div class="game-toolbar">
-          <div><p class="eyebrow">CAMPO DE TREINAMENTO</p><h2>MEMORY <span>ARENA</span></h2></div>
-          <div class="round-label"><span class="status-dot"></span> PARTIDA EM ANDAMENTO</div>
+    </div>
+
+    <header>
+        <div id="scoreBoard" class="score-board" style="display: none;">
+
+            <div id="p1Card" class="player-card active">
+                <img id="p1Avatar" src="" alt="P1" class="avatar">
+                <div class="info">
+                    <span id="p1NameDisplay">Jogador 1</span>
+                    <span class="score" id="p1Score">0</span>
+                </div>
+            </div>
+
+            <div class="vs">VS</div>
+
+            <div id="p2Card" class="player-card">
+                <div class="info">
+                    <span id="p2NameDisplay">Jogador 2</span>
+                    <span class="score" id="p2Score">0</span>
+                </div>
+                <img id="p2Avatar" src="" alt="P2" class="avatar">
+            </div>
+
         </div>
-        <div id="scoreBoard" class="score-board" style="display:none">
-          <div id="p1Card" class="player-card active">
-            <img id="p1Avatar" src="" alt="Avatar do jogador 1" class="avatar">
-            <div class="player-info"><span class="player-label">JOGADOR 1</span><strong id="p1NameDisplay">Goku</strong><span class="score" id="p1Score">0</span></div>
-          </div>
-          <div class="versus-mark">VS</div>
-          <div id="p2Card" class="player-card">
-            <div class="player-info align-right"><span class="player-label">JOGADOR 2</span><strong id="p2NameDisplay">Vegeta</strong><span class="score" id="p2Score">0</span></div>
-            <img id="p2Avatar" src="" alt="Avatar do jogador 2" class="avatar">
-          </div>
-        </div>
-        <div id="soloStats" class="solo-stats" style="display:none"><span class="stat-icon">◈</span><span>TENTATIVAS</span><strong id="moves">0</strong></div>
-        <div class="board-frame"><div class="board-topline"><span>◆</span> TABULEIRO DE COMBATE <span>◆</span></div><div class="game-board" id="gameBoard" aria-label="Cartas do jogo da memória"></div></div>
-        <div class="game-footer"><span><i></i> ENCONTRE TODOS OS PARES</span><button onclick="restartSetup()" class="main-menu-btn" type="button">← MENU PRINCIPAL</button></div>
-      </div>
-    </section>
-    <footer class="page-footer"><span>DRAGON BALL Z · MEMORY BATTLE</span><span>UM DESAFIO PARA OS GUERREIROS Z</span></footer>
-  </main>
-  <audio id="musicSolo" loop preload="none"><source src="cha-la-head-cha-la-bridge-1.mp3" type="audio/mpeg"></audio>
-  <audio id="musicVs" loop preload="none"><source src="Battle.mp3" type="audio/mpeg"></audio>
-  <audio id="flipSound" preload="none"><source src="dragon-ball-z-grabbing-sound.mp3" type="audio/mpeg"></audio>
-  <audio id="winSound" preload="none"><source src="Final.mp3" type="audio/mpeg"></audio>
-  <script src="script.js" defer></script>
-  <script>if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(console.error));</script>
+
+        <div id="soloStats" class="stats" style="display:none;">Tentativas: <span id="moves">0</span></div>
+    </header>
+
+    <div class="game-board" id="gameBoard"></div>
+
+   <button onclick="restartSetup()" class="main-menu-btn">Menu Principal</button>
+
+   <audio id="musicSolo" loop>
+        <source src="cha-la-head-cha-la-bridge-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="musicVs" loop>
+        <source src="Battle.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="flipSound">
+        <source src="dragon-ball-z-grabbing-sound.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="winSound">
+        <source src="Final.mp3" type="audio/mpeg">
+    </audio>
+    <script src="script.js"></script>
+
+    <script>
+        // Registro do Service Worker (Para funcionar como App)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js');
+            });
+        }
+    </script>
 </body>
+
 </html>
