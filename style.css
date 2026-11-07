@@ -1,1 +1,304 @@
-:root{color-scheme:dark;--bg:#080c16;--panel:#101827;--line:rgba(164,190,229,.15);--text:#f5f7fb;--muted:#8f9bb0;--orange:#ff9d26;--gold:#ffd36b;--blue:#3c8dff;--green:#67e6a5;--radius:22px}*{box-sizing:border-box;margin:0;padding:0}html{min-height:100%;background:var(--bg)}body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% -20%,#1b3152 0,transparent 52%),linear-gradient(145deg,#080c16,#101827);color:var(--text);font-family:Inter,Arial,sans-serif;padding:0 22px 24px;touch-action:manipulation}.ambient{position:fixed;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.13;z-index:0}.ambient-one{width:360px;height:360px;background:#ff8a16;top:18%;left:-220px}.ambient-two{width:420px;height:420px;background:#167cff;right:-260px;bottom:0}.app-shell{position:relative;z-index:1;width:min(1120px,100%);margin:auto}.topbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none}.brand img{width:49px;height:49px;object-fit:contain}.brand span{display:flex;flex-direction:column;font-family:'Barlow Condensed',sans-serif;font-size:20px;line-height:.86;letter-spacing:1.8px}.brand small{font-size:12px;color:var(--orange);letter-spacing:4px;margin-top:5px}.topbar-tag,.round-label{font-size:10px;letter-spacing:1.6px;font-weight:800;color:#aebbd0;display:flex;align-items:center;gap:9px}.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);display:inline-block}.intro{min-height:230px;display:flex;align-items:center;padding:34px 7% 28px;position:relative;overflow:hidden}.intro-copy{position:relative;z-index:2}.eyebrow{font-size:10px;letter-spacing:2.8px;font-weight:800;color:var(--orange);margin-bottom:10px}.intro h1{font:900 clamp(42px,7vw,76px)/.83 'Barlow Condensed',Impact,sans-serif;letter-spacing:1px}.intro h1 span{color:var(--gold);text-shadow:0 4px 28px #ff9d2638}.intro-description{color:#aab6c9;max-width:440px;font-size:13px;line-height:1.7;margin-top:17px}.intro-art{position:absolute;right:8%;top:0;height:100%;width:300px;display:grid;place-items:center;opacity:.85}.intro-art img{width:210px;height:210px;object-fit:contain;filter:drop-shadow(0 0 28px #ff9d2650)}.art-glow{position:absolute;width:210px;height:210px;border-radius:50%;background:#ff9d26;filter:blur(75px);opacity:.22}.game-panel{position:relative;background:linear-gradient(145deg,rgba(20,31,49,.96),rgba(11,18,31,.98));border:1px solid rgba(143,169,210,.19);border-radius:var(--radius);box-shadow:0 28px 80px #0007;overflow:hidden;min-height:500px}.game-content{padding:27px clamp(16px,4vw,42px) 24px}.game-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.game-toolbar .eyebrow{margin-bottom:4px;font-size:9px}.game-toolbar h2{font:800 26px 'Barlow Condensed',sans-serif;letter-spacing:1.5px}.game-toolbar h2 span{color:var(--orange)}.score-board{width:min(620px,100%);margin:0 auto 20px;display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:linear-gradient(110deg,#17253a,#111b2c);border:1px solid var(--line);border-radius:15px}.player-card{display:flex;align-items:center;gap:12px;min-width:0;opacity:.48;transition:opacity .25s,transform .25s}.player-card.active{opacity:1;transform:translateY(-2px)}.avatar{width:54px;height:54px;border-radius:13px;object-fit:cover;border:2px solid #66758c;background:#080c16}.player-card.active .avatar{border-color:var(--orange);box-shadow:0 0 18px #ff9d2640}.player-info{display:flex;flex-direction:column;gap:2px;min-width:0}.player-info strong{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}.player-label{font-size:8px;letter-spacing:1.4px;color:var(--muted);font-weight:800}.score{font:800 22px 'Barlow Condensed',sans-serif;color:var(--gold)}.align-right{text-align:right}.versus-mark{font:900 19px 'Barlow Condensed',sans-serif;color:#75839b;font-style:italic}.solo-stats{width:max-content;margin:0 auto 18px;padding:9px 17px;border:1px solid var(--line);border-radius:30px;background:#111d2d;display:flex;align-items:center;gap:9px;color:#aab6c9;font-size:9px;letter-spacing:1.4px;font-weight:800}.solo-stats strong{font:800 19px 'Barlow Condensed',sans-serif;color:var(--gold);margin-left:4px}.stat-icon{font-size:15px;color:#55d8ff}.board-frame{max-width:720px;margin:0 auto;padding:13px;background:#050a13aa;border:1px solid var(--line);border-radius:16px}.board-topline{text-align:center;color:#8291a8;font-size:8px;letter-spacing:2px;font-weight:800;margin:1px 0 12px}.board-topline span{color:var(--orange);padding:0 8px}.game-board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(7px,1.5vw,13px);width:100%;perspective:1000px}.card{appearance:none;border:0;padding:0;background:transparent;color:inherit;aspect-ratio:3/4;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .52s cubic-bezier(.2,.75,.25,1);outline:none}.card:focus-visible{filter:drop-shadow(0 0 5px #55d8ff)}.card.flip{transform:rotateY(180deg)}.front-face,.back-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:10px;overflow:hidden;backface-visibility:hidden;border:1px solid #52647d;box-shadow:0 5px 13px #0006}.back-face{background:linear-gradient(145deg,#263d5d,#101b2e);background-image:linear-gradient(145deg,#14243b66,#09132199),url('img/Esferas.jpg');background-size:cover;background-position:center}.back-face:after{content:'Z';font:900 clamp(28px,5vw,48px) 'Barlow Condensed',sans-serif;color:#ffb43b;text-shadow:0 2px 0 #8c3500,0 0 18px #ff8c1a}.front-face{background:#e8edf5;transform:rotateY(180deg)}.front-face img{width:100%;height:100%;object-fit:cover}.card.matched .front-face{border:2px solid var(--green);box-shadow:0 0 17px #67e6a555}.card.matched{cursor:default}.card.matched .front-face:after{content:'✓';position:absolute;right:6px;top:6px;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:#123d30;color:#8fffc5;font-weight:900}.game-footer{display:flex;align-items:center;justify-content:space-between;max-width:720px;margin:17px auto 0}.game-footer>span{font-size:8px;letter-spacing:1.4px;color:#8593a9;font-weight:800}.game-footer>span i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:7px}.main-menu-btn,.secondary-btn{background:transparent;color:#aab6c9;border:1px solid #3a4960;border-radius:8px;padding:9px 13px;font-size:9px;font-weight:800;letter-spacing:1px;cursor:pointer;transition:.2s}.main-menu-btn:hover,.secondary-btn:hover{border-color:var(--orange);color:var(--text)}.overlay-screen{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:22px;background:#050911e8;backdrop-filter:blur(12px)}.menu-box{width:min(430px,100%);text-align:center;padding:29px 30px 23px;background:linear-gradient(150deg,#19263b,#101827);border:1px solid #52627b66;border-radius:20px;box-shadow:0 22px 70px #0009;position:relative;overflow:hidden}.menu-box:before{content:'';position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,var(--orange),transparent)}.menu-emblem{width:58px;height:58px;margin:0 auto 13px;border-radius:50%;display:grid;place-items:center;background:#ff9d2614;border:1px solid #ff9d2644}.menu-emblem img{width:45px;height:45px;object-fit:contain}.menu-box h2{font:800 27px 'Barlow Condensed',sans-serif;letter-spacing:1.2px}.menu-description{font-size:11px;color:#9ba9bd;line-height:1.6;margin:8px 0 18px}.mode-select{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:17px}.mode-button{display:flex;align-items:center;gap:8px;text-align:left;padding:11px 10px;border-radius:10px;border:1px solid #35445b;background:#111d2e;color:var(--text);cursor:pointer;transition:.2s}.mode-button.selected{border-color:var(--orange);background:linear-gradient(130deg,#ff9d2619,#111d2e);box-shadow:inset 0 0 20px #ff9d260c}.mode-icon{font-size:20px;color:var(--gold)}.mode-button strong,.mode-button small{display:block}.mode-button strong{font-size:10px;letter-spacing:1px}.mode-button small{font-size:8px;color:#92a0b5;margin-top:3px}.mode-arrow{margin-left:auto;color:var(--orange);font-size:20px}.inputs-section{text-align:left}.inputs-section label{display:block;font-size:8px;font-weight:800;letter-spacing:1.3px;color:#aab6c9;margin:11px 0 6px}.inputs-section input{width:100%;padding:12px 13px;border:1px solid #35445b;border-radius:8px;background:#0b1422;color:#fff;font:500 12px Inter,sans-serif;outline:none}.inputs-section input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #3c8dff20}.player2-field[hidden]{display:none}.start-btn{width:100%;margin-top:16px;padding:13px 16px;border:0;border-radius:8px;background:linear-gradient(100deg,#ff8d1b,#ffc04d);color:#241406;font-size:10px;font-weight:900;letter-spacing:1.4px;cursor:pointer;box-shadow:0 7px 20px #ff9d2626;transition:transform .2s,filter .2s}.start-btn span{float:right;font-size:17px;line-height:10px}.start-btn:hover{filter:brightness(1.08);transform:translateY(-2px)}.menu-footnote{font-size:8px;letter-spacing:1.2px;color:#728199;margin-top:17px}.result-box{padding-top:32px}.result-orb{width:48px;height:48px;margin:0 auto 13px;display:grid;place-items:center;border-radius:50%;background:#ff9d2618;border:1px solid #ff9d2670;color:var(--gold);font-size:25px}.final-score{color:#b9c5d7;font-size:13px;line-height:1.9;margin:14px 0}.final-score strong{color:var(--gold)}.secondary-btn{width:100%;margin-top:10px;padding:12px}.page-footer{display:flex;justify-content:space-between;padding:17px 3px;color:#627087;font-size:8px;font-weight:800;letter-spacing:1.5px}@media(max-width:650px){body{padding:0 12px 18px}.topbar{height:66px}.brand img{width:40px;height:40px}.topbar-tag{font-size:8px;letter-spacing:1px}.intro{min-height:195px;padding:28px 5%}.intro h1{font-size:52px}.intro-description{font-size:11px;max-width:290px}.intro-art{right:-35px;opacity:.35}.intro-art img{width:180px;height:180px}.game-content{padding:20px 12px}.game-toolbar{margin-bottom:16px}.game-toolbar h2{font-size:23px}.round-label{font-size:7px;letter-spacing:.8px}.score-board{padding:10px;gap:5px}.avatar{width:42px;height:42px;border-radius:10px}.player-card{gap:7px}.player-info strong{font-size:11px;max-width:85px}.score{font-size:19px}.versus-mark{font-size:15px}.board-frame{padding:9px}.game-board{gap:7px}.front-face,.back-face{border-radius:7px}.game-footer>span{font-size:7px;letter-spacing:.8px}.main-menu-btn{font-size:8px;padding:8px}.overlay-screen{padding:12px}.menu-box{padding:24px 18px 19px}.menu-box h2{font-size:24px}.page-footer{font-size:7px;letter-spacing:.8px}}@media(max-width:380px){.game-board{gap:5px}.board-frame{padding:7px}.front-face,.back-face{border-radius:5px}.mode-button{gap:5px;padding:9px 7px}.mode-button small{font-size:7px}.mode-icon{font-size:16px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+/* --- ESTILOS GERAIS --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* Impede barras de rolagem */
+    touch-action: manipulation; /* Melhora a resposta ao toque */
+    user-select: none; /* Impede seleção de texto */
+    -webkit-user-select: none; /* Para Safari/iPhone */
+}
+body {
+    background: #222;
+    background-image: linear-gradient(135deg, #1a1a1a 25%, #2a2a2a 100%);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Mantém o conteúdo no topo */
+    min-height: 100vh;
+    color: white;
+    user-select: none;
+    
+    /* --- CORREÇÃO DO ESPAÇAMENTO --- */
+    padding-top: 20px;
+    padding-bottom: 120px; /* Aumentei bastante para o botão ter folga */
+    overflow-y: auto;      /* Permite rolar a tela se ficar muito grande */
+    overflow-x: hidden;
+}
+
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+h1 {
+    color: #ff9900;
+    text-shadow: 2px 2px #000;
+    font-size: 2rem; /* Fonte um pouco menor para caber em telas pequenas */
+    margin-bottom: 10px;
+}
+
+.stats {
+    font-size: 1.2rem;
+    color: #5bc0de;
+}
+/* --- TELA INICIAL (Modal) --- */
+.start-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 100; /* Fica em cima de tudo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-box {
+    background: linear-gradient(135deg, #e65100, #ff9800);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 4px solid #00ff00;
+    box-shadow: 0 0 20px #535353;
+    width: 90%;
+    max-width: 400px;
+}
+
+.menu-box h1 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
+
+.menu-box input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+.menu-box button {
+    margin: 5px;
+    width: 100%;
+}
+
+.start-btn {
+    background-color: #0044cc; /* Azul DBZ */
+    font-weight: bold;
+    margin-top: 15px !important;
+}
+
+/* --- PLACAR (Scoreboard) --- */
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(206, 190, 190, 0.1);
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.player-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.5; /* Opaco quando não é a vez */
+    transition: all 0.3s;
+}
+
+/* Quando for a vez do jogador */
+.player-card.active {
+    opacity: 1;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px yellow;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgb(255, 255, 255);
+    object-fit: cover;
+    background: #010101;
+}
+
+.score {
+    font-size: 1.5rem;
+    color: #ff9900;
+    font-weight: bold;
+}
+
+.vs { font-weight: bold; font-style: italic; color: #aaa; }
+
+
+/* --- TABULEIRO DO JOGO --- */
+.game-board {
+    display: grid;
+    /* Aqui está o segredo: cria colunas automáticas com mínimo de 70px ou 100px */
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    width: 95%; /* Ocupa quase toda a largura da tela no celular */
+    max-width: 800px;
+    margin-bottom: 30px;
+    perspective: 1000px;
+}
+
+/* --- CARTAS --- */
+.card {
+    background-color: transparent;
+    /* Removemos a altura fixa (height: 120px) e usamos proporção */
+    width: 100%;
+    aspect-ratio: 3 / 4; /* Mantém sempre o formato retangular perfeito */
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    /* Tira o destaque azul de toque no mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.front-face, .back-face {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    border: 2px solid #fff;
+}
+
+/* O verso da carta (Capa) */
+.back-face {
+    /* Se você salvou a capa como 'capa.jpg' na pasta img */
+    background-image: url('img/Esferas.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Ajusta a imagem para cobrir toda a carta sem esticar */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Esconde a letra "Z" caso ela ainda esteja no HTML */
+    color: transparent; 
+}
+
+
+/* A frente da carta (Personagem) */
+.front-face {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.front-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Estado quando encontra o par */
+.card.matched .front-face {
+    opacity: 0.6;
+    border-color: #00ff00;
+}
+
+/* --- BOTÃO --- */
+button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: #ff9900;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 40px;
+    box-shadow: 0 4px #b36b00;
+    transition: all 0.1s;
+}
+
+button:active {
+    box-shadow: 0 2px #b36b00;
+    transform: translateY(2px);
+}
+
+
+/* Botão de Voltar ao Menu */
+.main-menu-btn {
+    margin-top: 30px;
+    margin-bottom: 50px; /* Espaço extra abaixo do botão */
+    background-color: #444;
+    color: #fff;
+    border: 1px solid #666;
+    padding: 15px 30px;  /* Botão um pouco maior para facilitar o toque */
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.main-menu-btn:hover {
+    background-color: #555;
+}
+
+
+/* --- ESCONDER BARRA DE ROLAGEM (Visualmente) --- */
+
+/* Para Chrome, Safari e Opera */
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Para Firefox, IE e Edge */
+body {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* --- AJUSTES PARA CELULAR --- */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 5px; /* Menos espaço no título */
+    }
+
+    .game-board {
+        /* 4 cartas por linha */
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 5px; /* Espaço bem pequeno entre cartas */
+        width: 98%; /* Usa quase a tela toda */
+        margin-bottom: 10px;
+    }
+
+    .card {
+        border-width: 1px;
+    }
+    
+    /* Reduz um pouco o cabeçalho para sobrar espaço */
+    header {
+        margin: 10px 0;
+    }
+    
+    /* Ajusta o botão do menu para não ficar gigante */
+    .main-menu-btn {
+        padding: 10px 20px;
+        margin-top: 10px;
+        margin-bottom: 30px;
+    }
+}
