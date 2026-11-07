@@ -46,7 +46,7 @@ Jogo da memória temático inspirado no universo Dragon Ball Z. O projeto utiliz
 ```text
 DragonBallZ/
 ├── docs/
-│   └── gameplay-preview.svg  # Captura de tela real do jogo
+│   └── Imagem do ChatGPT 4 de nov. de 2026, 10_20_43.png  # Captura de tela do jogo
 ├── img/                      # Imagens dos personagens
 ├── index.html                # Estrutura da aplicação
 ├── style.css                 # Estilos e responsividade
