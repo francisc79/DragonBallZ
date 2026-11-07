@@ -1,24 +1,299 @@
-'use strict';
-const gameBoard=document.getElementById('gameBoard'),movesElement=document.getElementById('moves'),musicSolo=document.getElementById('musicSolo'),musicVs=document.getElementById('musicVs'),flipSound=document.getElementById('flipSound'),winSound=document.getElementById('winSound');
-[musicSolo,musicVs,flipSound,winSound].forEach(a=>a.volume=a===flipSound?.65:a===winSound?.85:.35);
-const allCharacters=['Kayoshin','GokuSS3','Nuvem','Android19','Videl','MajinBuu','Android16','Goku SSJ','Android 17','Kuririn','Shenlong','Super Vegeta','Android 20','Android 18','Super Trunks','Gohan SS2','Trunks Espada','Sr Kaioh','Chaos','Freeza Final','Gohan Crianca','Sr Popo','Mestre Karin','Nappa','Bulma','Tenshinhan','Goku Bebe','Piccolo','ChiChi','Mestre Kame','Raditz'];
-const maleAvatars=['Goku SSJ','Super Vegeta','Piccolo','Gohan SS2','Trunks Espada','Mestre Kame'],femaleAvatars=['Bulma','ChiChi','Android 18','Videl'];
-let isMultiplayer=false,currentPlayer=1,scores={1:0,2:0},names={1:'Goku',2:'Vegeta'},hasFlippedCard=false,lockBoard=false,firstCard=null,secondCard=null,moves=0,gameFinished=false;
-function shuffle(items){const result=[...items];for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;}
-function selectMode(mode){isMultiplayer=mode===2;document.querySelectorAll('.mode-button').forEach(b=>b.classList.toggle('selected',Number(b.dataset.mode)===mode));document.getElementById('player2Field').hidden=!isMultiplayer;document.getElementById('player1Name').focus();}
-function getAvatarByName(name){const normalized=name.trim().toLocaleLowerCase('pt-BR'),isFemale=/a$/.test(normalized)||['videl','pan','bulma'].includes(normalized),options=isFemale?femaleAvatars:maleAvatars;return `img/${options[Math.floor(Math.random()*options.length)]}.jpg`;}
-function escapeHTML(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function safePlay(audio,restart=false){if(restart)audio.currentTime=0;const promise=audio.play();if(promise&&typeof promise.catch==='function')promise.catch(()=>{});}
-function initGame(){names[1]=document.getElementById('player1Name').value.trim()||'Goku';names[2]=document.getElementById('player2Name').value.trim()||'Vegeta';document.getElementById('p1NameDisplay').textContent=names[1];document.getElementById('p2NameDisplay').textContent=names[2];document.getElementById('p1Avatar').src=getAvatarByName(names[1]);document.getElementById('p2Avatar').src=getAvatarByName(names[2]);document.getElementById('startScreen').style.display='none';document.getElementById('gameOverScreen').style.display='none';document.getElementById('scoreBoard').style.display=isMultiplayer?'flex':'none';document.getElementById('soloStats').style.display=isMultiplayer?'none':'flex';document.getElementById('p2Card').style.display=isMultiplayer?'flex':'none';document.querySelector('.versus-mark').style.display=isMultiplayer?'block':'none';startGame();stopAllAudio();safePlay(isMultiplayer?musicVs:musicSolo);}
-function startGame(){gameBoard.innerHTML='';moves=0;scores={1:0,2:0};currentPlayer=1;gameFinished=false;resetBoard();movesElement.textContent='0';updateScoreUI();const selectedCharacters=shuffle(allCharacters).slice(0,10),cardList=shuffle([...selectedCharacters,...selectedCharacters]);cardList.forEach((character,index)=>{const card=document.createElement('button');card.type='button';card.className='card';card.dataset.character=character;card.setAttribute('aria-label',`Carta ${index+1}, virada para baixo`);card.innerHTML=`<span class="front-face"><img src="${encodeURI(`img/${character}.jpg`)}" alt="${character}" loading="lazy"></span><span class="back-face" aria-hidden="true"></span>`;card.addEventListener('click',flipCard);gameBoard.appendChild(card);});if(isMultiplayer)updateTurnIndicator();}
-function flipCard(event){const card=event.currentTarget;if(lockBoard||gameFinished||card===firstCard||card.classList.contains('matched')||card.classList.contains('flip'))return;safePlay(flipSound,true);card.classList.add('flip');card.setAttribute('aria-label',`Carta revelada: ${card.dataset.character}`);if(!hasFlippedCard){hasFlippedCard=true;firstCard=card;return;}secondCard=card;moves++;movesElement.textContent=String(moves);checkForMatch();}
-function checkForMatch(){if(firstCard.dataset.character===secondCard.dataset.character)disableCards();else unflipCards();}
-function disableCards(){[firstCard,secondCard].forEach(card=>{card.classList.add('matched');card.disabled=true;card.setAttribute('aria-label',`Par encontrado: ${card.dataset.character}`);});if(isMultiplayer){scores[currentPlayer]++;updateScoreUI();}if(document.querySelectorAll('.card.matched').length===gameBoard.children.length){resetBoard();setTimeout(checkWinCondition,450);}else resetBoard();}
-function unflipCards(){lockBoard=true;setTimeout(()=>{[firstCard,secondCard].forEach(card=>{card.classList.remove('flip');card.setAttribute('aria-label','Carta virada para baixo');});if(isMultiplayer){currentPlayer=currentPlayer===1?2:1;updateTurnIndicator();}resetBoard();},950);}
-function updateTurnIndicator(){document.getElementById('p1Card').classList.toggle('active',currentPlayer===1);document.getElementById('p2Card').classList.toggle('active',currentPlayer===2);}
-function updateScoreUI(){document.getElementById('p1Score').textContent=String(scores[1]);document.getElementById('p2Score').textContent=String(scores[2]);}
-function resetBoard(){hasFlippedCard=false;lockBoard=false;firstCard=null;secondCard=null;}
-function checkWinCondition(){if(gameFinished||document.querySelectorAll('.card.matched').length!==gameBoard.children.length)return;gameFinished=true;stopAllAudio();safePlay(winSound);let title,scoreMessage;if(isMultiplayer){if(scores[1]>scores[2])title=`VITÓRIA DE ${names[1].toLocaleUpperCase('pt-BR')}!`;else if(scores[2]>scores[1])title=`VITÓRIA DE ${names[2].toLocaleUpperCase('pt-BR')}!`;else title='EMPATE!';scoreMessage=`${escapeHTML(names[1])}: ${scores[1]} pares<br>${escapeHTML(names[2])}: ${scores[2]} pares`;}else{title='MISSÃO CUMPRIDA!';scoreMessage=`${escapeHTML(names[1])}, você encontrou todos os pares em<br><strong>${moves} tentativas</strong>.`;}document.getElementById('winnerText').textContent=title;document.getElementById('finalScore').innerHTML=scoreMessage;document.getElementById('gameOverScreen').style.display='flex';}
-function stopAllAudio(){[musicSolo,musicVs,winSound].forEach(audio=>{audio.pause();audio.currentTime=0;});}
-function restartSetup(){stopAllAudio();gameFinished=true;document.getElementById('gameOverScreen').style.display='none';document.getElementById('startScreen').style.display='flex';document.getElementById('scoreBoard').style.display='none';document.getElementById('soloStats').style.display='none';gameBoard.innerHTML='';resetBoard();}
-function playAgain(){document.getElementById('gameOverScreen').style.display='none';startGame();safePlay(isMultiplayer?musicVs:musicSolo);}
+const gameBoard = document.getElementById('gameBoard');
+const movesElement = document.getElementById('moves');
+
+// --- CONFIGURAÇÃO DE ÁUDIO ---
+const musicSolo = document.getElementById('musicSolo'); 
+musicSolo.volume = 0.4; // Volume do modo Solo
+
+const musicVs = document.getElementById('musicVs'); 
+musicVs.volume = 0.5;   // Volume do modo Versus
+
+const flipSound = document.getElementById('flipSound'); 
+flipSound.volume = 0.8; // Efeito sonoro alto
+
+const winSound = document.getElementById('winSound'); 
+winSound.volume = 1.0; // Vitória no máximo
+
+// --- LISTA DE PERSONAGENS ---
+const allCharacters = [
+    'Kayoshin', 'GokuSS3', 'Nuvem', 'Android19', 'Videl', 'MajinBuu', 
+    'Android16', 'Goku SSJ', 'Android 17', 'Kuririn', 'Shenlong', 
+    'Super Vegeta', 'Android 20', 'Android 18', 'Super Trunks', 
+    'Gohan SS2', 'Trunks Espada', 'Sr Kaioh', 'Chaos', 'Freeza Final', 
+    'Gohan Crianca', 'Sr Popo', 'Mestre Karin', 'Nappa', 'Bulma', 
+    'Tenshinhan', 'Goku Bebe', 'Piccolo', 'ChiChi', 'Mestre Kame', 'Raditz'
+];
+
+// --- AVATARES ---
+const maleAvatars = ['Goku SSJ', 'Vegeta Scouter', 'Piccolo', 'Gohan SS2', 'Trunks Espada', 'Mestre Kame'];
+const femaleAvatars = ['Bulma', 'ChiChi', 'Android 18', 'Videl'];
+
+// VARIÁVEIS DO JOGO
+let isMultiplayer = false;
+let currentPlayer = 1; 
+let scores = { 1: 0, 2: 0 };
+let names = { 1: '', 2: '' };
+let hasFlippedCard = false;
+let lockBoard = false;
+let firstCard, secondCard;
+let moves = 0;
+
+// --- FUNÇÕES DE MENU ---
+
+function selectMode(mode) {
+    const inputsDiv = document.getElementById('inputsSection');
+    const player2Input = document.getElementById('player2Name');
+    
+    inputsDiv.style.display = 'block';
+    
+    if (mode === 1) {
+        isMultiplayer = false;
+        player2Input.style.display = 'none';
+    } else {
+        isMultiplayer = true;
+        player2Input.style.display = 'block';
+    }
+}
+
+function getAvatarByName(name) {
+    const lowerName = name.toLowerCase().trim();
+    const isFemale = lowerName.endsWith('a') || lowerName === 'videl' || lowerName === 'pan';
+    const list = isFemale ? femaleAvatars : maleAvatars;
+    const randomChar = list[Math.floor(Math.random() * list.length)];
+    return `img/${randomChar}.jpg`;
+}
+
+function initGame() {
+    names[1] = document.getElementById('player1Name').value || 'Goku';
+    names[2] = document.getElementById('player2Name').value || 'Vegeta';
+
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('scoreBoard').style.display = 'flex';
+    document.getElementById('soloStats').style.display = 'none';
+    
+    // Configura Jogador 1
+    document.getElementById('p1NameDisplay').innerText = names[1];
+    document.getElementById('p1Avatar').src = getAvatarByName(names[1]);
+
+    if (isMultiplayer) {
+        document.getElementById('p2Card').style.display = 'flex';
+        document.querySelector('.vs').style.display = 'block';
+        document.getElementById('p2NameDisplay').innerText = names[2];
+        document.getElementById('p2Avatar').src = getAvatarByName(names[2]);
+        document.getElementById('p1Score').innerText = "0";
+        document.getElementById('p2Score').innerText = "0";
+        updateTurnIndicator();
+    } else {
+        document.getElementById('p2Card').style.display = 'none';
+        document.querySelector('.vs').style.display = 'none';
+        document.getElementById('p1Score').innerText = "0 moves";
+    }
+
+    startGame();
+
+    // ♫ TOCA A MÚSICA DE FUNDO AO INICIAR ♫
+    stopAllAudio(); // Garante que nada mais está tocando
+    
+    if (isMultiplayer) {
+        musicVs.play().catch(e => console.log(e));
+    } else {
+        musicSolo.play().catch(e => console.log(e));
+    }
+
+    // ATIVA A TELA CHEIA
+    enterFullScreen();
+}
+
+// --- LÓGICA DO JOGO ---
+
+function startGame() {
+    gameBoard.innerHTML = '';
+    moves = 0;
+    scores = { 1: 0, 2: 0 };
+    currentPlayer = 1;
+    movesElement.innerText = moves;
+    
+    if (isMultiplayer) updateScoreUI();
+
+    let shuffledDb = allCharacters.sort(() => Math.random() - 0.5);
+    let selectedCharacters = shuffledDb.slice(0, 10);
+    let cardList = [...selectedCharacters, ...selectedCharacters];
+    cardList.sort(() => Math.random() - 0.5);
+
+    cardList.forEach(char => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.character = char;
+        card.innerHTML = `<div class="front-face"><img src="img/${char}.jpg"></div><div class="back-face"></div>`;
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+    });
+}
+
+function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
+
+    // Apenas o efeito sonoro
+    flipSound.currentTime = 0;
+    flipSound.play();
+    
+    this.classList.add('flip');
+
+    if (!hasFlippedCard) {
+        hasFlippedCard = true;
+        firstCard = this;
+        return;
+    }
+
+    secondCard = this;
+    checkForMatch();
+}
+
+function checkForMatch() {
+    if (!isMultiplayer) {
+        moves++;
+        document.getElementById('p1Score').innerText = moves + " moves"; 
+    }
+
+    let isMatch = firstCard.dataset.character === secondCard.dataset.character;
+
+    isMatch ? disableCards() : unflipCards();
+}
+
+function disableCards() {
+    firstCard.classList.add('matched');
+    secondCard.classList.add('matched');
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard);
+
+    if (isMultiplayer) {
+        scores[currentPlayer]++;
+        updateScoreUI();
+        setTimeout(checkWinCondition, 500);
+        resetBoard(false);
+    } else {
+        setTimeout(checkWinCondition, 500);
+        resetBoard();
+    }
+}
+
+function unflipCards() {
+    lockBoard = true;
+    setTimeout(() => {
+        firstCard.classList.remove('flip');
+        secondCard.classList.remove('flip');
+        
+        if (isMultiplayer) switchTurn();
+        
+        resetBoard();
+    }, 1000);
+}
+
+function switchTurn() {
+    currentPlayer = (currentPlayer === 1) ? 2 : 1;
+    updateTurnIndicator();
+}
+
+function updateTurnIndicator() {
+    const p1Card = document.getElementById('p1Card');
+    const p2Card = document.getElementById('p2Card');
+    
+    if (currentPlayer === 1) {
+        p1Card.classList.add('active');
+        p2Card.classList.remove('active');
+    } else {
+        p1Card.classList.remove('active');
+        p2Card.classList.add('active');
+    }
+}
+
+function updateScoreUI() {
+    document.getElementById('p1Score').innerText = scores[1];
+    document.getElementById('p2Score').innerText = scores[2];
+}
+
+function resetBoard(switchPlayer = true) {
+    [hasFlippedCard, lockBoard] = [false, false];
+    [firstCard, secondCard] = [null, null];
+}
+
+function checkWinCondition() {
+    let matchedCards = document.querySelectorAll('.matched').length;
+    let totalCards = document.querySelectorAll('.card').length;
+
+    if (matchedCards === totalCards) {
+        // ♫ PARA A MÚSICA E TOCA VITÓRIA ♫
+        stopAllAudio();
+        winSound.play().catch(e => console.log(e));
+        
+        let headerMsg = "";
+        let scoreMsg = "";
+
+        if (isMultiplayer) {
+            if (scores[1] > scores[2]) headerMsg = `VITÓRIA DE ${names[1].toUpperCase()}!`;
+            else if (scores[2] > scores[1]) headerMsg = `VITÓRIA DE ${names[2].toUpperCase()}!`;
+            else headerMsg = "EMPATE!";
+            scoreMsg = `${names[1]}: ${scores[1]} pts <br> ${names[2]}: ${scores[2]} pts`;
+        } else {
+            headerMsg = "MISSÃO CUMPRIDA!";
+            scoreMsg = `${names[1]}, completou com <br> <strong>${moves} movimentos</strong>!`;
+        }
+
+        setTimeout(() => {
+            document.getElementById('winnerText').innerText = headerMsg;
+            document.getElementById('finalScore').innerHTML = scoreMsg;
+            document.getElementById('gameOverScreen').style.display = 'flex';
+        }, 500);
+    }
+}
+
+// Função auxiliar para parar tudo
+function stopAllAudio() {
+    musicSolo.pause();
+    musicSolo.currentTime = 0;
+    
+    musicVs.pause();
+    musicVs.currentTime = 0;
+    
+    winSound.pause();
+    winSound.currentTime = 0;
+}
+
+function restartSetup() {
+    stopAllAudio();
+    
+    document.getElementById('gameOverScreen').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'flex';
+    document.getElementById('inputsSection').style.display = 'none';
+    
+    gameBoard.innerHTML = ''; 
+    document.getElementById('scoreBoard').style.display = 'none';
+}
+
+function playAgain() {
+    stopAllAudio();
+    document.getElementById('gameOverScreen').style.display = 'none';
+    
+    startGame();
+    
+    if (isMultiplayer) {
+        musicVs.play().catch(e => console.log(e));
+    } else {
+        musicSolo.play().catch(e => console.log(e));
+    }
+}
+
+// Função para Tela Cheia (Agora fora do initGame)
+function enterFullScreen() {
+    const doc = document.documentElement;
+    if (doc.requestFullscreen) {
+        doc.requestFullscreen();
+    } else if (doc.mozRequestFullScreen) { /* Firefox */
+        doc.mozRequestFullScreen();
+    } else if (doc.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+        doc.webkitRequestFullscreen();
+    } else if (doc.msRequestFullscreen) { /* IE/Edge */
+        doc.msRequestFullscreen();
+    }
+}
