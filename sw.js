@@ -1,72 +1,68 @@
-const CACHE_NAME = 'dbz-memory-v3';
-
-// Arquivos essenciais para o jogo iniciar
-// (Não precisamos listar todas as imagens aqui, vamos cachear elas dinamicamente)
-const urlsToCache = [
+const CACHE_NAME = 'dbz-memory-v4';
+const APP_SHELL = [
   './',
   './index.html',
   './style.css',
   './script.js',
-  './img/DBZ.png'
+  './manifest.json',
+  './DBZ.png',
+  './ESFERA.png'
 ];
 
-// 1. Instalação: Cacheia os arquivos estáticos iniciais
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Cache aberto');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// 2. Requisição (Fetch): Serve arquivos do cache ou busca na rede
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Se encontrou no cache, retorna o arquivo cacheado
-        if (response) {
-          return response;
+self.addEventListener('fetch', event => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  // Imagens: tenta a rede primeiro para evitar servir arquivos incompletos ou antigos.
+  // Se estiver offline, utiliza a última cópia válida guardada no cache.
+  if (request.destination === 'image') {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      try {
+        const response = await fetch(request);
+        if (response && response.ok) {
+          await cache.put(request, response.clone());
         }
+        return response;
+      } catch (error) {
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        throw error;
+      }
+    })());
+    return;
+  }
 
-        // Se não encontrou, busca na internet
-        return fetch(event.request).then(
-          (response) => {
-            // Verifica se a resposta é válida
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
+  // Demais arquivos: cache primeiro, rede como alternativa.
+  event.respondWith((async () => {
+    const cached = await caches.match(request);
+    if (cached) return cached;
 
-            // IMPORTANTE: Clona a resposta. 
-            // Uma vai para o navegador e a outra vai para o cache (para a próxima vez)
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
-      })
-  );
-});
-
-// 3. Ativação: Limpa caches antigos se você mudar a versão (v1 para v2)
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
+    const response = await fetch(request);
+    if (response && response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
+    return response;
+  })());
 });
